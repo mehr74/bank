@@ -1,12 +1,12 @@
-#ifndef SHORTTERM_H
-#define SHORTTERM_H
+#ifndef CURRENT_H
+#define CURRENT_H
 
 #include "account.h"
 
-class ShortTerm : public Account
+class Current : public Account
 {
     public:
-        ShortTerm(BigInteger cash, Date * = new Date(), const string& name = "");
+        Current(BigInteger cash, Date * = new Date(), const string& name = "");
 
         // financial operations
         virtual void Deposite(BigInteger);
@@ -30,5 +30,4 @@ class ShortTerm : public Account
         const static int interestRate;
         static int ourCount;
 };
-
-#endif // SHORTTERM_H
+#endif // CURRENT_H

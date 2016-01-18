@@ -1,12 +1,12 @@
-#ifndef SHORTTERM_H
-#define SHORTTERM_H
+#ifndef GHARZOLHASANE_H
+#define GHARZOLHASANE_H
 
 #include "account.h"
 
-class ShortTerm : public Account
+class GharzolHasane : public Account
 {
     public:
-        ShortTerm(BigInteger cash, Date * = new Date(), const string& name = "");
+        GharzolHasane(BigInteger cash, Date * = new Date(), const string& name = "");
 
         // financial operations
         virtual void Deposite(BigInteger);
@@ -26,9 +26,9 @@ class ShortTerm : public Account
 
         Date *initialDate;
 
-        const static BigInteger leastBalance;
+        BigInteger leastBalance;
         const static int interestRate;
         static int ourCount;
 };
 
-#endif // SHORTTERM_H
+#endif // GHARZOLHASANE_H

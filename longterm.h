@@ -1,12 +1,12 @@
-#ifndef SHORTTERM_H
-#define SHORTTERM_H
+#ifndef LONGTERM_H
+#define LONGTERM_H
 
 #include "account.h"
 
-class ShortTerm : public Account
+class LongTerm : public Account
 {
     public:
-        ShortTerm(BigInteger cash, Date * = new Date(), const string& name = "");
+        LongTerm(BigInteger cash, Date * = new Date(), const string& name = "");
 
         // financial operations
         virtual void Deposite(BigInteger);
@@ -31,4 +31,4 @@ class ShortTerm : public Account
         static int ourCount;
 };
 
-#endif // SHORTTERM_H
+#endif // LONGTERM_H

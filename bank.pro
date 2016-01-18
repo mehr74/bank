@@ -7,11 +7,17 @@ SOURCES += main.cpp \
     date.cpp \
     account.cpp \
     bigint.cpp \
-    shortterm.cpp
+    shortterm.cpp \
+    longterm.cpp \
+    current.cpp \
+    gharzolhasane.cpp
 
 HEADERS += \
     date.h \
     account.h \
     bigint.h \
-    shortterm.h
+    shortterm.h \
+    longterm.h \
+    current.h \
+    gharzolhasane.h
 
