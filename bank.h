@@ -19,7 +19,8 @@ enum AccountType
 class Bank
 {
 public:
-    Bank();
+    Bank(const string& name = "");
+    Bank(Date *, const string& name = "");
     void GetAccounts();
     void GetAccount(int ID);
 
@@ -28,7 +29,7 @@ public:
 
     void Sortition();
 
-    Date* GetDate();
+    Date* GetDate(DateType = JALALI) const;
     void SetDate(Date *dd);
 
     void CreateAccount(BigInteger cash, AccountType type, const string& name = "");
@@ -38,6 +39,7 @@ private:
     vector <Account *> Accounts;
     Date *myCurrentDate;
     string myName;
+    int myNumber;
     static int ourCount;
 };
 
