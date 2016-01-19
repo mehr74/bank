@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     shortterm.cpp \
     longterm.cpp \
     current.cpp \
-    gharzolhasane.cpp
+    gharzolhasane.cpp \
+    bank.cpp
 
 HEADERS += \
     date.h \
@@ -19,5 +20,7 @@ HEADERS += \
     shortterm.h \
     longterm.h \
     current.h \
-    gharzolhasane.h
+    gharzolhasane.h \
+    bank.h \
+    accounts.h
 
