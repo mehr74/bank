@@ -6,7 +6,7 @@
 class LongTerm : public Account
 {
     public:
-        LongTerm(BigInteger cash, Date * = new Date(), const string& name = "");
+        LongTerm(int ID, BigInteger cash, Date * = new Date(), const string& name = "");
 
         // financial operations
         virtual void Deposite(BigInteger);
@@ -20,6 +20,7 @@ class LongTerm : public Account
 
     private:
         int myID;
+        int myNumber;
         BigInteger myBalance;
 
         string myName;

@@ -64,21 +64,21 @@ void Bank::SetDate(Date *dd)
     myCurrentDate = dd;
 }
 
-void Bank::CreateAccount(BigInteger cash, AccountType type, const string& name)
+void Bank::CreateAccount(int ID, BigInteger cash, AccountType type, const string& name)
 {
     switch(type)
     {
     case SHORT_TERM:
-        Accounts.push_back(new ShortTerm(cash, myCurrentDate, name));
+        Accounts.push_back(new ShortTerm(ID, cash, myCurrentDate, name));
         break;
     case LONG_TERM:
-        Accounts.push_back(new LongTerm(cash, myCurrentDate, name));
+        Accounts.push_back(new LongTerm(ID, cash, myCurrentDate, name));
         break;
     case CURRENT:
-        Accounts.push_back(new Current(cash, myCurrentDate, name));
+        Accounts.push_back(new Current(ID, cash, myCurrentDate, name));
         break;
     case GHARZOL_HASANE:
-        Accounts.push_back(new GharzolHasane(cash, myCurrentDate, name));
+        Accounts.push_back(new GharzolHasane(ID, cash, myCurrentDate, name));
         break;
     }
 }

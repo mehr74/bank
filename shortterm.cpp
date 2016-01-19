@@ -5,12 +5,13 @@ const BigInteger ShortTerm::ourLeastBalance = 10000;
 const int ShortTerm::ourInterestRate = 17;
 
 
-ShortTerm::ShortTerm(BigInteger cash, Date *dd, const string& name)
+ShortTerm::ShortTerm(int ID, BigInteger cash, Date *dd, const string& name)
     : myBalance(cash),
       myName(name),
       myInitialDate(dd),
       myLastBenefitDate(dd),
-      myID(ourCount)
+      myNumber(ourCount),
+      myID(ID)
 {
     ourCount++;
 }

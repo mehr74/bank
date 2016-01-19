@@ -4,12 +4,13 @@ int GharzolHasane::ourCount = 0;
 const int GharzolHasane::ourInterestRate = 12;
 
 
-GharzolHasane::GharzolHasane(BigInteger cash, Date *dd, const string& name)
+GharzolHasane::GharzolHasane(int ID, BigInteger cash, Date *dd, const string& name)
     : myBalance(cash),
       myName(name),
       myInitialDate(dd),
       myLastBenefitDate(dd),
-      myID(ourCount)
+      myNumber(ourCount),
+      myID(ID)
 {
     myLeastBalance = cash;
     ourCount++;

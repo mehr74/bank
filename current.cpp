@@ -5,11 +5,12 @@ const BigInteger Current::ourLeastBalance = 0;
 const int Current::ourInterestRate = 0;
 
 
-Current::Current(BigInteger cash, Date *dd, const string& name)
+Current::Current(int ID, BigInteger cash, Date *dd, const string& name)
     : myBalance(cash),
       myName(name),
       myInitialDate(dd),
-      myID(ourCount)
+      myNumber(ourCount),
+      myID(ID)
 {
     ourCount++;
 }

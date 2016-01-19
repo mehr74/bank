@@ -32,7 +32,7 @@ public:
     Date* GetDate(DateType = JALALI) const;
     void SetDate(Date *dd);
 
-    void CreateAccount(BigInteger cash, AccountType type, const string& name = "");
+    void CreateAccount(int ID, BigInteger cash, AccountType type, const string& name = "");
 
 
 private:

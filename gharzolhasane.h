@@ -6,7 +6,7 @@
 class GharzolHasane : public Account
 {
     public:
-        GharzolHasane(BigInteger cash, Date * = new Date(), const string& name = "");
+        GharzolHasane(int ID, BigInteger cash, Date * = new Date(), const string& name = "");
 
         // financial operations
         virtual void Deposite(BigInteger);
@@ -20,6 +20,7 @@ class GharzolHasane : public Account
 
     private:
         int myID;
+        int myNumber;
         BigInteger myBalance;
 
         string myName;

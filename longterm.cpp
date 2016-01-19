@@ -5,12 +5,13 @@ const BigInteger LongTerm::ourLeastBalance = 15000;
 const int LongTerm::ourInterestRate = 42;
 
 
-LongTerm::LongTerm(BigInteger cash, Date *dd, const string& name)
+LongTerm::LongTerm(int ID, BigInteger cash, Date *dd, const string& name)
     : myBalance(cash),
       myName(name),
       myInitialDate(dd),
       myLastBenefitDate(dd),
-      myID(ourCount)
+      myNumber(ourCount),
+      myID(ID)
 {
     ourCount++;
 }
