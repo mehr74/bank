@@ -1,38 +1,70 @@
 #include "shortterm.h"
 
 int ShortTerm::ourCount = 0;
-const BigInteger ShortTerm::leastBalance = 10000;
-const int ShortTerm::interestRate = 17;
+const BigInteger ShortTerm::ourLeastBalance = 10000;
+const int ShortTerm::ourInterestRate = 17;
 
 
 ShortTerm::ShortTerm(BigInteger cash, Date *dd, const string& name)
-    : balance(cash), myName(name), initialDate(dd), ID(ourCount)
+    : myBalance(cash),
+      myName(name),
+      myInitialDate(dd),
+      myLastBenefitDate(dd),
+      myID(ourCount)
 {
     ourCount++;
 }
 
-void ShortTerm::Deposite(BigInteger)
+void ShortTerm::Deposite(BigInteger cash)
 {
+    Benefit();
+    myBalance = myBalance + cash;
 }
 
-bool ShortTerm::WithDraw(BigInteger)
+bool ShortTerm::WithDraw(BigInteger cash)
 {
+    Benefit();
+    if(myBalance >= cash)
+    {
+        myBalance = myBalance - cash;
+        return true;
+    }
+    return false;
 }
 
 BigInteger ShortTerm::GetBalance()
 {
-
+    Benefit();
+    return myBalance;
 }
 
-BigInteger ShortTerm::Benefit(Date *)
+BigInteger ShortTerm::Benefit(Date *dd)
 {
-
+    if(myBalance < ourLeastBalance)
+    {
+        return 0;
+    }
+    int days = dd - myLastBenefitDate;
+    BigInteger prevBalance = myBalance;
+    for(int i = 0; i < days; i++)
+    {
+        double interest;
+        interest = (double)myBalance * ((double)ourInterestRate / 365*100);
+        BigInteger dayInterest((int)interest);
+        myBalance = myBalance + dayInterest;
+    }
+    myLastBenefitDate = dd;
+    return myBalance - prevBalance;
 }
 
 int ShortTerm::GetID()
 {
+    return myID;
 }
 
 string ShortTerm::ToString() const
 {
+    ostringstream out;
+    out << "Short Term Account (" << myID << ") " << myName;
+    return out.str();
 }

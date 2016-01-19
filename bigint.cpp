@@ -169,6 +169,13 @@ BigInteger::operator string() // for conversion from BigInteger to string
     return signedString;
 }
 //-------------------------------------------------------------
+BigInteger::operator double() // for conversion from BigInteger to double
+{
+    double signedString = ( getSign() ) ? -1 : 1; // if +ve, don't print + sign
+    signedString *= toInt(number);
+    return signedString;
+}
+//-------------------------------------------------------------
 
 bool BigInteger::equals(BigInteger n1, BigInteger n2)
 {

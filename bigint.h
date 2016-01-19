@@ -30,6 +30,7 @@ public:
     BigInteger operator * (BigInteger b);
     BigInteger operator / (BigInteger b);
     operator string(); // for conversion from BigInteger to string
+    operator double(); // for conversion from BigInteger to double
 
     // getting input from istream
     friend istream &operator>>(istream &, BigInteger &);

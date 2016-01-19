@@ -35,7 +35,7 @@ Date::Date()
     GregorianToJalali();
 }
 
-Date::Date(int m, int d, int y, DateType t)
+Date::Date(int d, int m, int y, DateType t)
 {
     CheckDate(m,d,y,t);
 }

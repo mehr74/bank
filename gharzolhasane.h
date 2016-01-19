@@ -12,22 +12,23 @@ class GharzolHasane : public Account
         virtual void Deposite(BigInteger);
         virtual bool WithDraw(BigInteger);
         virtual BigInteger GetBalance();
-        virtual BigInteger Benefit(Date *);
+        virtual BigInteger Benefit(Date * = new Date());
 
         // display operations
         virtual int GetID();
         virtual string ToString() const;
 
     private:
-        int ID;
-        BigInteger balance;
+        int myID;
+        BigInteger myBalance;
 
         string myName;
 
-        Date *initialDate;
+        Date *myInitialDate;
+        Date *myLastBenefitDate;
 
-        BigInteger leastBalance;
-        const static int interestRate;
+        BigInteger myLeastBalance;
+        const static int ourInterestRate;
         static int ourCount;
 };
 

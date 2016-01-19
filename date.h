@@ -49,7 +49,7 @@ class Date
 {
   public:
     Date();                       // construct date with default value
-    Date(int m,int d,int y, DateType = GREGORIAN);      // construct date with specified values
+    Date(int d,int m,int y, DateType = GREGORIAN);      // construct date with specified values
 
     int Month(DateType = GREGORIAN) const;     // return month corresponding to date
     int Day(DateType = GREGORIAN) const;     // return day corresponding to date
