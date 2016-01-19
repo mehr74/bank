@@ -18,7 +18,7 @@ Bank::Bank(Date *dd, const string& name)
     ourCount++;
 }
 
-void Bank::GetAccounts()
+void Bank::GetIDs()
 {
     cout << "***********************************************" << endl;
     cout << "* Bank Accounts (" << myNumber << ") " << myName << endl;
@@ -31,19 +31,44 @@ void Bank::GetAccounts()
     cout << "*\n***********************************************" << endl;
 }
 
-void Bank::GetAccount(int ID)
+void Bank::GetAccounts()
 {
+    cout << "***********************************************" << endl;
+    cout << "* Bank Accounts (" << myNumber << ") " << myName << endl;
+    cout << "* ";
+    GetDate();
+    cout << "*" << endl;
+    for(int i = 0; i < Accounts.size(); i++)
+        cout << "* " << i+1 << " " << Accounts[i]->DeepString() << endl;
 
+    cout << "*\n***********************************************" << endl;
 }
 
 void Bank::Deposit(int ID, BigInteger cash)
 {
-
+    bool found = false;
+    for(int i = 0; i < Accounts.size(); i++)
+    {
+        if(Accounts[i]->GetID() == ID)
+        {
+            Accounts[i]->Deposite(cash);
+            found = true;
+        }
+    }
 }
 
 bool Bank::WithDraw(int ID, BigInteger cash)
 {
-
+    bool done = false;
+    bool found = false;
+    for(int i = 0; i < Accounts.size(); i++)
+    {
+        if(Accounts[i]->GetID() == ID)
+        {
+            done = Accounts[i]->WithDraw(cash);
+            found = true;
+        }
+    }
 }
 
 void Bank::Sortition()

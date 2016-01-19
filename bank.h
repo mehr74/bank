@@ -8,21 +8,13 @@
 #include <string>
 #include <vector>
 
-enum AccountType
-{
-    SHORT_TERM,
-    LONG_TERM,
-    CURRENT,
-    GHARZOL_HASANE
-};
-
 class Bank
 {
 public:
     Bank(const string& name = "");
     Bank(Date *, const string& name = "");
     void GetAccounts();
-    void GetAccount(int ID);
+    void GetIDs();
 
     void Deposit(int ID, BigInteger cash);
     bool WithDraw(int ID, BigInteger cash);

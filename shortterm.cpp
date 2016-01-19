@@ -1,4 +1,5 @@
 #include "shortterm.h"
+#include "operation.h"
 
 int ShortTerm::ourCount = 0;
 const BigInteger ShortTerm::ourLeastBalance = 10000;
@@ -14,12 +15,14 @@ ShortTerm::ShortTerm(int ID, BigInteger cash, Date *dd, const string& name)
       myID(ID)
 {
     ourCount++;
+    myOprs.push_back(new Operation(this, cash, CREATE, dd));
 }
 
 void ShortTerm::Deposite(BigInteger cash)
 {
     Benefit();
     myBalance = myBalance + cash;
+    myOprs.push_back(new Operation(this, cash, DEPOSIT));
 }
 
 bool ShortTerm::WithDraw(BigInteger cash)
@@ -28,6 +31,7 @@ bool ShortTerm::WithDraw(BigInteger cash)
     if(myBalance >= cash)
     {
         myBalance = myBalance - cash;
+        myOprs.push_back(new Operation(this, cash, WITH_DRAW));
         return true;
     }
     return false;
@@ -67,5 +71,14 @@ string ShortTerm::ToString() const
 {
     ostringstream out;
     out << "Short Term Account (" << myID << ") " << myName;
+    return out.str();
+}
+
+string ShortTerm::DeepString() const
+{
+    ostringstream out;
+    out << *this;
+    for(int i = 0; i < myOprs.size(); i++)
+        out << *myOprs[i];
     return out.str();
 }

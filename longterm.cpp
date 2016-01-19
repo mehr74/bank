@@ -1,4 +1,5 @@
 #include "longterm.h"
+#include "operation.h"
 
 int LongTerm::ourCount = 0;
 const BigInteger LongTerm::ourLeastBalance = 15000;
@@ -14,12 +15,14 @@ LongTerm::LongTerm(int ID, BigInteger cash, Date *dd, const string& name)
       myID(ID)
 {
     ourCount++;
+    myOprs.push_back(new Operation(this, cash, CREATE));
 }
 
 void LongTerm::Deposite(BigInteger cash)
 {
     Benefit();
     myBalance = myBalance + cash;
+    myOprs.push_back(new Operation(this, cash, DEPOSIT));
 }
 
 bool LongTerm::WithDraw(BigInteger cash)
@@ -28,6 +31,7 @@ bool LongTerm::WithDraw(BigInteger cash)
     if(myBalance >= cash)
     {
         myBalance = myBalance - cash;
+        myOprs.push_back(new Operation(this, cash, WITH_DRAW));
         return true;
     }
     return false;
@@ -67,5 +71,14 @@ string LongTerm::ToString() const
 {
     ostringstream out;
     out << "Long Term Account (" << myID << ") " << myName;
+    return out.str();
+}
+
+string LongTerm::DeepString() const
+{
+    ostringstream out;
+    out << *this;
+    for(int i = 0; i < myOprs.size(); i++)
+        out << *myOprs[i];
     return out.str();
 }

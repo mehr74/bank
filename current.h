@@ -1,8 +1,10 @@
 #ifndef CURRENT_H
 #define CURRENT_H
 
+#include <vector>
 #include "account.h"
 
+class Operation;
 class Current : public Account
 {
     public:
@@ -17,6 +19,7 @@ class Current : public Account
         // display operations
         virtual int GetID();
         virtual string ToString() const;
+        virtual string DeepString() const;
 
     private:
         int myID;
@@ -24,6 +27,7 @@ class Current : public Account
         BigInteger myBalance;
 
         string myName;
+        vector <Operation *> myOprs;
 
         Date *myInitialDate;
 

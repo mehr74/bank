@@ -77,11 +77,11 @@ int main()
         }
         else if(command.find("ShowAccount") != string::npos)
         {
-           // bank.GetAccountsInDetail();
+            bank.GetAccounts();
         }
         else if(command.find("ShowIDs") != string::npos)
         {
-            bank.GetAccounts();
+            bank.GetIDs();
         }
         else if(command.find("Sortition") != string::npos)
         {

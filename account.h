@@ -18,7 +18,7 @@ class Account
         // display operations
         virtual int GetID() = 0;
         virtual string ToString() const = 0;
-        virtual string deepString() const { return ToString(); }
+        virtual string DeepString() const { return ToString(); }
 };
 
 ostream& operator << (ostream& out, const Account& a);

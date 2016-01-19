@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     longterm.cpp \
     current.cpp \
     gharzolhasane.cpp \
-    bank.cpp
+    bank.cpp \
+    operation.cpp
 
 HEADERS += \
     date.h \
@@ -22,5 +23,6 @@ HEADERS += \
     current.h \
     gharzolhasane.h \
     bank.h \
-    accounts.h
+    accounts.h \
+    operation.h
 

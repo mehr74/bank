@@ -2,7 +2,9 @@
 #define SHORTTERM_H
 
 #include "account.h"
+#include <vector>
 
+class Operation;
 class ShortTerm : public Account
 {
     public:
@@ -17,6 +19,7 @@ class ShortTerm : public Account
         // display operations
         virtual int GetID();
         virtual string ToString() const;
+        virtual string DeepString() const;
 
     private:
         int myID;
@@ -24,6 +27,7 @@ class ShortTerm : public Account
         BigInteger myBalance;
 
         string myName;
+        vector <Operation *> myOprs;
 
         Date *myInitialDate;
         Date *myLastBenefitDate;

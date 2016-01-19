@@ -1,4 +1,5 @@
 #include "gharzolhasane.h"
+#include "operation.h"
 
 int GharzolHasane::ourCount = 0;
 const int GharzolHasane::ourInterestRate = 12;
@@ -14,12 +15,14 @@ GharzolHasane::GharzolHasane(int ID, BigInteger cash, Date *dd, const string& na
 {
     myLeastBalance = cash;
     ourCount++;
+    myOprs.push_back(new Operation(this, cash, CREATE, dd));
 }
 
 void GharzolHasane::Deposite(BigInteger cash)
 {
     Benefit();
     myBalance = myBalance + cash;
+    myOprs.push_back(new Operation(this, cash, DEPOSIT));
 }
 
 bool GharzolHasane::WithDraw(BigInteger cash)
@@ -28,6 +31,7 @@ bool GharzolHasane::WithDraw(BigInteger cash)
     if(myBalance >= cash)
     {
         myBalance = myBalance - cash;
+        myOprs.push_back(new Operation(this, cash, WITH_DRAW));
         return true;
     }
     return false;
@@ -67,5 +71,14 @@ string GharzolHasane::ToString() const
 {
     ostringstream out;
     out << "GharzolHasane Account (" << myID << ") " << myName;
+    return out.str();
+}
+
+string GharzolHasane::DeepString() const
+{
+    ostringstream out;
+    out << *this;
+    for(int i = 0; i < myOprs.size(); i++)
+        out << *myOprs[i];
     return out.str();
 }
