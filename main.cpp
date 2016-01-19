@@ -85,7 +85,7 @@ int main()
         }
         else if(command.find("Sortition") != string::npos)
         {
-
+            bank.Sortition();
         }
         else if(command.find("Set") != string::npos)
         {

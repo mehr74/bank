@@ -18,20 +18,25 @@ ShortTerm::ShortTerm(int ID, BigInteger cash, Date *dd, const string& name)
     myOprs.push_back(new Operation(this, cash, CREATE, dd));
 }
 
-void ShortTerm::Deposite(BigInteger cash)
+bool ShortTerm::Deposite(BigInteger cash, Date * dd)
 {
-    Benefit();
+    if(dd < myLastBenefitDate)
+        return false;
+    Benefit(dd);
     myBalance = myBalance + cash;
-    myOprs.push_back(new Operation(this, cash, DEPOSIT));
+    myOprs.push_back(new Operation(this, cash, DEPOSIT, dd));
+    return true;
 }
 
-bool ShortTerm::WithDraw(BigInteger cash)
+bool ShortTerm::WithDraw(BigInteger cash, Date * dd)
 {
-    Benefit();
+    if(dd < myLastBenefitDate)
+        return false;
+    Benefit(dd);
     if(myBalance >= cash)
     {
         myBalance = myBalance - cash;
-        myOprs.push_back(new Operation(this, cash, WITH_DRAW));
+        myOprs.push_back(new Operation(this, cash, WITH_DRAW, dd));
         return true;
     }
     return false;
@@ -46,15 +51,20 @@ BigInteger ShortTerm::GetBalance()
 BigInteger ShortTerm::Benefit(Date *dd)
 {
     if(myBalance < ourLeastBalance)
-    {
         return 0;
-    }
-    int days = dd - myLastBenefitDate;
+
+    int days = *dd - *myLastBenefitDate;
+
+    if(days < 0)
+        return 0;
+
     BigInteger prevBalance = myBalance;
     for(int i = 0; i < days; i++)
     {
         double interest;
-        interest = (double)myBalance * ((double)ourInterestRate / 365*100);
+        double tmp1 = (double)myBalance;
+        double tmp2 = (double)ourInterestRate / (365*100);
+        interest = tmp1 * tmp2;
         BigInteger dayInterest((int)interest);
         myBalance = myBalance + dayInterest;
     }
@@ -67,14 +77,14 @@ int ShortTerm::GetID()
     return myID;
 }
 
-string ShortTerm::ToString() const
+string ShortTerm::ToString()
 {
     ostringstream out;
-    out << "Short Term Account (" << myID << ") " << myName;
+    out << "Short Term Account (" << myID << ") " << myName << "   " << myBalance;
     return out.str();
 }
 
-string ShortTerm::DeepString() const
+string ShortTerm::DeepString()
 {
     ostringstream out;
     out << *this;

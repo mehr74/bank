@@ -15,23 +15,28 @@ LongTerm::LongTerm(int ID, BigInteger cash, Date *dd, const string& name)
       myID(ID)
 {
     ourCount++;
-    myOprs.push_back(new Operation(this, cash, CREATE));
+    myOprs.push_back(new Operation(this, cash, CREATE, dd));
 }
 
-void LongTerm::Deposite(BigInteger cash)
+bool LongTerm::Deposite(BigInteger cash, Date * dd)
 {
-    Benefit();
+    if(dd < myLastBenefitDate)
+        return false;
+    Benefit(dd);
     myBalance = myBalance + cash;
-    myOprs.push_back(new Operation(this, cash, DEPOSIT));
+    myOprs.push_back(new Operation(this, cash, DEPOSIT, dd));
+    return true;
 }
 
-bool LongTerm::WithDraw(BigInteger cash)
+bool LongTerm::WithDraw(BigInteger cash, Date * dd)
 {
-    Benefit();
+    if(dd < myLastBenefitDate)
+        return false;
+    Benefit(dd);
     if(myBalance >= cash)
     {
         myBalance = myBalance - cash;
-        myOprs.push_back(new Operation(this, cash, WITH_DRAW));
+        myOprs.push_back(new Operation(this, cash, WITH_DRAW, dd));
         return true;
     }
     return false;
@@ -46,15 +51,20 @@ BigInteger LongTerm::GetBalance()
 BigInteger LongTerm::Benefit(Date *dd)
 {
     if(myBalance < ourLeastBalance)
-    {
         return 0;
-    }
-    int days = dd - myLastBenefitDate;
+
+    int days = *dd - *myLastBenefitDate;
+
+    if(days < 0)
+        return 0;
+
     BigInteger prevBalance = myBalance;
     for(int i = 0; i < days; i++)
     {
         double interest;
-        interest = (double)myBalance * ((double)ourInterestRate / 365*100);
+        double tmp1 = (double)myBalance;
+        double tmp2 = (double)ourInterestRate / (365*100);
+        interest = tmp1 * tmp2;
         BigInteger dayInterest((int)interest);
         myBalance = myBalance + dayInterest;
     }
@@ -67,14 +77,14 @@ int LongTerm::GetID()
     return myID;
 }
 
-string LongTerm::ToString() const
+string LongTerm::ToString()
 {
     ostringstream out;
-    out << "Long Term Account (" << myID << ") " << myName;
+    out << "Long Term Account (" << myID << ") " << myName << "   " << myBalance;
     return out.str();
 }
 
-string LongTerm::DeepString() const
+string LongTerm::DeepString()
 {
     ostringstream out;
     out << *this;

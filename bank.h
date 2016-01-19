@@ -29,6 +29,7 @@ public:
 
 private:
     vector <Account *> Accounts;
+    vector <AccountType> AccountTypes;
     Date *myCurrentDate;
     string myName;
     int myNumber;

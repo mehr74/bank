@@ -10,17 +10,17 @@ class Account
         virtual ~Account() {}
 
         // financial operations
-        virtual void Deposite(BigInteger) = 0;
-        virtual bool WithDraw(BigInteger) = 0;
+        virtual bool Deposite(BigInteger, Date * = new Date()) = 0;
+        virtual bool WithDraw(BigInteger, Date * = new Date()) = 0;
         virtual BigInteger GetBalance() = 0;
         virtual BigInteger Benefit(Date * = new Date()) = 0;
 
         // display operations
         virtual int GetID() = 0;
-        virtual string ToString() const = 0;
-        virtual string DeepString() const { return ToString(); }
+        virtual string ToString()  = 0;
+        virtual string DeepString() { return ToString(); }
 };
 
-ostream& operator << (ostream& out, const Account& a);
+ostream& operator << (ostream& out, Account& a);
 
 #endif // ACCOUNT_H

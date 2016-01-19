@@ -18,20 +18,25 @@ GharzolHasane::GharzolHasane(int ID, BigInteger cash, Date *dd, const string& na
     myOprs.push_back(new Operation(this, cash, CREATE, dd));
 }
 
-void GharzolHasane::Deposite(BigInteger cash)
+bool GharzolHasane::Deposite(BigInteger cash, Date *dd)
 {
-    Benefit();
+    if(dd < myLastBenefitDate)
+        return false;
+    Benefit(dd);
     myBalance = myBalance + cash;
-    myOprs.push_back(new Operation(this, cash, DEPOSIT));
+    myOprs.push_back(new Operation(this, cash, DEPOSIT, dd));
+    return true;
 }
 
-bool GharzolHasane::WithDraw(BigInteger cash)
+bool GharzolHasane::WithDraw(BigInteger cash, Date *dd)
 {
-    Benefit();
+    if(dd < myLastBenefitDate)
+        return false;
+    Benefit(dd);
     if(myBalance >= cash)
     {
         myBalance = myBalance - cash;
-        myOprs.push_back(new Operation(this, cash, WITH_DRAW));
+        myOprs.push_back(new Operation(this, cash, WITH_DRAW, dd));
         return true;
     }
     return false;
@@ -46,15 +51,20 @@ BigInteger GharzolHasane::GetBalance()
 BigInteger GharzolHasane::Benefit(Date *dd)
 {
     if(myBalance < myLeastBalance)
-    {
         return 0;
-    }
-    int days = dd - myLastBenefitDate;
+
+    int days = *dd - *myLastBenefitDate;
+
+    if(days < 0)
+        return 0;
+
     BigInteger prevBalance = myBalance;
     for(int i = 0; i < days; i++)
     {
         double interest;
-        interest = (double)myBalance * ((double)ourInterestRate / 365*100);
+        double tmp1 = (double)myBalance;
+        double tmp2 = (double)ourInterestRate / (365*100);
+        interest = tmp1 * tmp2;
         BigInteger dayInterest((int)interest);
         myBalance = myBalance + dayInterest;
     }
@@ -67,17 +77,19 @@ int GharzolHasane::GetID()
     return myID;
 }
 
-string GharzolHasane::ToString() const
+string GharzolHasane::ToString()
 {
     ostringstream out;
-    out << "GharzolHasane Account (" << myID << ") " << myName;
+    out << "GharzolHasane Account (" << myID << ") " << myName << "   " << myBalance;
     return out.str();
 }
 
-string GharzolHasane::DeepString() const
+string GharzolHasane::DeepString()
 {
     ostringstream out;
     out << *this;
+    int j = 0;
+    int i = myOprs.size();
     for(int i = 0; i < myOprs.size(); i++)
         out << *myOprs[i];
     return out.str();

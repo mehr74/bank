@@ -1,0 +1,2 @@
+* Sortition function implementation
+* make tostring and deepstring const methods

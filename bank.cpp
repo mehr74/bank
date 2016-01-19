@@ -1,4 +1,6 @@
 #include "bank.h"
+#include <time.h>
+#include <cstdlib>
 
 int Bank::ourCount = 0;
 
@@ -51,7 +53,7 @@ void Bank::Deposit(int ID, BigInteger cash)
     {
         if(Accounts[i]->GetID() == ID)
         {
-            Accounts[i]->Deposite(cash);
+            Accounts[i]->Deposite(cash, myCurrentDate);
             found = true;
         }
     }
@@ -65,7 +67,7 @@ bool Bank::WithDraw(int ID, BigInteger cash)
     {
         if(Accounts[i]->GetID() == ID)
         {
-            done = Accounts[i]->WithDraw(cash);
+            done = Accounts[i]->WithDraw(cash, myCurrentDate);
             found = true;
         }
     }
@@ -73,7 +75,30 @@ bool Bank::WithDraw(int ID, BigInteger cash)
 
 void Bank::Sortition()
 {
-
+    vector<int> points;
+    srand(time(NULL));
+    for(int i = 0; i < Accounts.size(); i++)
+    {
+        if(AccountTypes[i] == GHARZOL_HASANE)
+        {
+            int tmp = Accounts[i]->GetBalance();
+            for(int j = 0; j < tmp; j++)
+                points.push_back(Accounts[i]->GetID());
+        }
+    }
+    if(!points.empty())
+    {
+        int winner = rand() % points.size();
+        int winnerID = points[winner];
+        cout << "Winner is : " << winnerID << endl;
+        for(int i = 0; i < Accounts.size(); i++)
+        {
+            if(Accounts[i]->GetID() == winnerID)
+            {
+                Accounts[i]->Deposite(111111, myCurrentDate);
+            }
+        }
+    }
 }
 
 Date * Bank::GetDate(DateType t) const
@@ -87,6 +112,8 @@ Date * Bank::GetDate(DateType t) const
 void Bank::SetDate(Date *dd)
 {
     myCurrentDate = dd;
+    for(int i = 0; i < Accounts.size(); i++)
+        Accounts[i]->Benefit(dd);
 }
 
 void Bank::CreateAccount(int ID, BigInteger cash, AccountType type, const string& name)
@@ -95,15 +122,19 @@ void Bank::CreateAccount(int ID, BigInteger cash, AccountType type, const string
     {
     case SHORT_TERM:
         Accounts.push_back(new ShortTerm(ID, cash, myCurrentDate, name));
+        AccountTypes.push_back(SHORT_TERM);
         break;
     case LONG_TERM:
         Accounts.push_back(new LongTerm(ID, cash, myCurrentDate, name));
+        AccountTypes.push_back(LONG_TERM);
         break;
     case CURRENT:
         Accounts.push_back(new Current(ID, cash, myCurrentDate, name));
+        AccountTypes.push_back(CURRENT);
         break;
     case GHARZOL_HASANE:
         Accounts.push_back(new GharzolHasane(ID, cash, myCurrentDate, name));
+        AccountTypes.push_back(GHARZOL_HASANE);
         break;
     }
 }

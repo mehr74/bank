@@ -11,15 +11,15 @@ class ShortTerm : public Account
         ShortTerm(int ID, BigInteger cash, Date * = new Date(), const string& name = "");
 
         // financial operations
-        virtual void Deposite(BigInteger);
-        virtual bool WithDraw(BigInteger);
+        virtual bool Deposite(BigInteger, Date * = new Date());
+        virtual bool WithDraw(BigInteger, Date * = new Date());
         virtual BigInteger GetBalance();
         virtual BigInteger Benefit(Date * = new Date());
 
         // display operations
         virtual int GetID();
-        virtual string ToString() const;
-        virtual string DeepString() const;
+        virtual string ToString();
+        virtual string DeepString();
 
     private:
         int myID;
